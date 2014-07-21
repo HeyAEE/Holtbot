@@ -18,14 +18,15 @@ def holt():
         try:
             sub = praw.helpers.comment_stream(r, 'redsox+baseball+test')
             for listing in sub: # Now just regularly updating
-                if "brock holt" in listing.body.lower() or "brockholt" in listing.body.lower() and listing.id not in sifted:
-                    print "Brock Holt found!"
-                    holt_string = '''\o/'''
-                    sifted = comment_poster(holt_string, listing, sifted)
-                elif "holt" in listing.body.lower() and listing.id not in sifted:
-                    print "Holt found!"
-                    holt_string = '''Brock Holt! \o/'''
-                    sifted = comment_poster(holt_string, listing, sifted)
+                if str(listing.author).lower() is not "holtbot":
+                    if "brock holt" in listing.body.lower() or "brockholt" in listing.body.lower() and listing.id not in sifted:
+                        print "Brock Holt found!"
+                        holt_string = '''\o/'''
+                        sifted = comment_poster(holt_string, listing, sifted)
+                    elif "holt" in listing.body.lower() and listing.id not in sifted:
+                        print "Holt found!"
+                        holt_string = '''Brock Holt! \o/'''
+                        sifted = comment_poster(holt_string, listing, sifted)
         except requests.exceptions.RequestException:
             print "Could not connect. Sleeping for 10 mins."
     string = "Holts found: %d."%(counter, time.ctime(), len(sifted))
