@@ -1,0 +1,4 @@
+'''Config.py.sample - Just an example of what config.py should look like. '''
+
+user = 'user'
+pw = 'greatestpasswordever'

@@ -7,10 +7,11 @@
 '''
 
 import time, praw, requests
+import config as my_info
 
 def holt():
     r = praw.Reddit(user_agent='HoltBot 1.o.1 - The ultimate supporter of Red Sox rookie legend Brock Holt. \o/')
-    r.login('holtbot', 'Br0ckH0lt!')
+    r.login(my_info.user, my_info.pw)
     print "Connected!"
     sifted = set()
     hb_comments = praw.objects.Redditor(r, user_name='holtbot').get_comments(limit=None) # Have to get my own comments to populate set.
@@ -43,7 +44,7 @@ def holt():
     print string
         
 def comment_builder(holt_string):
-    footer = '''----- \n This praise brought to you by **HoltBot 1.o.1**.'''
+    footer = '''''' '''----- \n This praise brought to you by **HoltBot 1.o.1**.'''
     holt_comment = '''%s \n %s'''%(holt_string, footer)
     return holt_comment
     
