@@ -13,29 +13,23 @@ def holt():
     r.login('holtbot', 'Br0ckH0lt!')
     print "Connected!"
     sifted = set()
-    counter = 0
-    subs_to_scan = ['redsox', 'baseball']
-    
+    # Wheeee! Time to rewrite to use comment_stream!
     while True:
-        counter += 1
-        for entry in subs_to_scan:
-            try:
-                sub = r.get_subreddit(entry)
-                print "Subreddit results: "+str(sub)
-                for listing in list(sub.get_comments()): # Pulls 200 most recent comments from multisub
-                    if "brock holt" in listing.body.lower() or "brockholt" in listing.body.lower() and listing.id not in sifted:
-                        print "Brock Holt found!"
-                        holt_string = '''\o/'''
-                        sifted = comment_poster(holt_string, listing, sifted)
-                    elif "holt" in listing.body.lower() and listing.id not in sifted:
-                        print "Holt found!"
-                        holt_string = '''Brock Holt! \o/'''
-                        sifted = comment_poster(holt_string, listing, sifted)
-            except requests.exceptions.RequestException:
-                print "Could not connect. Sleeping for 10 mins."
-        string = "Scan %d run on %s. Holts found: %d."%(counter, time.ctime(), len(sifted))
-        print string
-        time.sleep(600)
+        try:
+            sub = praw.helpers.comment_stream(r, 'redsox+baseball+test')
+            for listing in sub: # Now just regularly updating
+                if "brock holt" in listing.body.lower() or "brockholt" in listing.body.lower() and listing.id not in sifted:
+                    print "Brock Holt found!"
+                    holt_string = '''\o/'''
+                    sifted = comment_poster(holt_string, listing, sifted)
+                elif "holt" in listing.body.lower() and listing.id not in sifted:
+                    print "Holt found!"
+                    holt_string = '''Brock Holt! \o/'''
+                    sifted = comment_poster(holt_string, listing, sifted)
+        except requests.exceptions.RequestException:
+            print "Could not connect. Sleeping for 10 mins."
+    string = "Holts found: %d."%(counter, time.ctime(), len(sifted))
+    print string
         
 def comment_builder(holt_string):
     footer = '''----- \n This praise brought to you by **HoltBot 1.o.1**.'''
