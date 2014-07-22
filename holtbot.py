@@ -32,6 +32,11 @@ def holt():
                         holt_string = '''\o/'''
                         sifted.add(listing.id)
                         comment_poster(holt_string, listing)
+                    elif "holtbot" in listing.body.lower() or "holt bot" in listing.body.lower() and listing.id not in sifted:
+                        print "I've been mentioned!"
+                        holt_string = '''You rang? \o/'''
+                        sifted.add(listing.id)
+                        comment_poster(holt_string, listing)
                     elif "holt" in listing.body.lower() and listing.id not in sifted:
                         print "Holt found!"
                         holt_string = '''Brock Holt! \o/'''
@@ -44,8 +49,8 @@ def holt():
     print string
         
 def comment_builder(holt_string):
-    footer = '''''' '''----- \n This praise brought to you by **HoltBot 1.o.1**.'''
-    holt_comment = '''%s \n %s'''%(holt_string, footer)
+    # footer = '''''' '''----- \n This praise brought to you by **HoltBot 1.o.1**.'''
+    holt_comment = '''%s'''%(holt_string)
     return holt_comment
     
 def comment_poster(holt_string, listing):
