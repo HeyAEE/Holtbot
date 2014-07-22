@@ -14,7 +14,7 @@ def holt():
     r.login(my_info.user, my_info.pw)
     print "Connected!"
     sifted = set()
-    hb_comments = praw.objects.Redditor(r, user_name='holtbot').get_comments(limit=None) # Have to get my own comments to populate set.
+    hb_comments = praw.objects.Redditor(r, user_name='holtbot').get_comments(limit=50) # Have to get my own comments to populate set.
     for comment in hb_comments:
         if comment.parent_id[0] =='t':
             sifted.add(comment.parent_id[comment.parent_id.index('_')+1:])
